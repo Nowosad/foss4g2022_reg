@@ -46,6 +46,5 @@ regions$inh = reg_inhomogeneity(regions[vars], input_raster,
 regions$iso = reg_isolation(regions[vars], input_raster, 
                             dist_fun = "jensen-shannon", sample_size = 200)
 
-regions1 = regions
-weighted.mean(regions1$inh, regions1$area_km2)
-mean(regions1$iso)
+weighted.mean(regions$inh, regions$area_km2)
+mean(regions$iso)
