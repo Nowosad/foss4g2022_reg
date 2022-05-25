@@ -24,11 +24,16 @@ skaterjsd_reg = map(c(468, 690, 1034, 1947, 2986), create_regions_rgeoda,
 df = map_dfr(c(kmeans_reg, skaterjsd_reg), extract_info)
 df$reg = c(kmeans_reg, skaterjsd_reg)
 
-# adds quality metrics ----------------------------------------------------
+# add quality metrics ----------------------------------------------------
 # this steps can take several minutes
 df$reg = map(df$reg, add_quality_metrics, input_raster, 
              distmethod = "jensen-shannon", sample_size = 200)
 
-# adds overall quality metrics --------------------------------------------
+# add overall quality metrics --------------------------------------------
 df$weigh_inh = map_dbl(df$reg, get_weighted_inh)
 df$unweigh_iso = map_dbl(df$reg, get_unweighted_iso)
+
+# save results ------------------------------------------------------------
+dir.create("data")
+saveRDS(df, "data/multi_calculation_results.rds")
+
